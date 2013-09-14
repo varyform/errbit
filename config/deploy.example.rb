@@ -11,6 +11,18 @@ config = YAML.load_file('config/config.yml')['deployment'] || {}
 require 'bundler/capistrano'
 load 'deploy/assets'
 
+load 'deploy/assets'
+load 'config/recipes/base'
+load 'config/recipes/check'
+load 'config/recipes/logrotate'
+load 'config/recipes/mandrill'
+load 'config/recipes/nginx'
+load 'config/recipes/newrelic_sysmond'
+load 'config/recipes/rbenv'
+load 'config/recipes/mongoid'
+load 'config/recipes/unattended_upgrades'
+load 'config/recipes/unicorn'
+
 set :application, "errbit"
 set :repository,  config['repository']
 

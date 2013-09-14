@@ -1,0 +1,13 @@
+<%= shared_path %>/log/*.log {
+  daily
+  missingok
+  compress
+  delaycompress
+  sharedscripts
+
+  rotate 60
+
+  postrotate
+    service unicorn_<%= application %> restart
+  endscript
+}
