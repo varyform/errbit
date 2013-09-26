@@ -1,4 +1,16 @@
-## 0.2.0 - Not Released Yet
+## 0.2.1 - Not released yet
+
+- [@anicet][]
+- [@nashby][]
+- [@shingara][]
+- [@tscolari][]
+
+[@anicet]: https://github.com/anicet
+[@nashby]: https://github.com/nashby
+[@shingara]: https://github.com/shingara
+[@tscolari]: https://github.com/tscolari
+
+## 0.2.0 - 2013-09-11
 
 - [@2called-chaos][]
 - [@Gonzih][]
