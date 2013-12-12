@@ -78,6 +78,20 @@ There is a demo available at [http://errbit-demo.herokuapp.com/](http://errbit-d
 Email: demo@errbit-demo.herokuapp.com<br/>
 Password: password
 
+# Requirement
+
+The list of requirement to install Errbit is :
+
+ * Ruby 1.9.3 or higher
+ * MongoDB 2.2.0 or higher
+
+By default it's the Ruby 2.0.0 to use. But you can define your own ruby
+version with RUBY_VERSION variable between :
+
+ * 1.9.3
+ * 2.0.0
+ * 2.1.0
+
 Installation
 ------------
 
@@ -165,6 +179,9 @@ heroku config:add HEROKU=true
 heroku config:add SECRET_TOKEN="$(bundle exec rake secret)"
 heroku config:add ERRBIT_HOST=some-hostname.example.com
 heroku config:add ERRBIT_EMAIL_FROM=example@example.com
+# This next line is required to access env variables during asset compilation.
+# For more info, go to this link: https://devcenter.heroku.com/articles/labs-user-env-compile
+heroku labs:enable user-env-compile
 git push heroku master
 ```
 
@@ -306,9 +323,13 @@ Errbit::Config.devise_modules << :ldap_authenticatable
   before authentication. You must add the following lines to `app/models/user.rb`:
 
 ```ruby
-  before_save :set_ldap_email
-  def set_ldap_email
-    self.email = Devise::LdapAdapter.get_ldap_param(self.username, "mail")
+  def ldap_before_save
+    name = Devise::LDAP::Adapter.get_ldap_param(self.username, "givenName")
+    surname = Devise::LDAP::Adapter.get_ldap_param(self.username, "sn")
+    mail = Devise::LDAP::Adapter.get_ldap_param(self.username, "mail")
+
+    self.name = (name + surname).join ' '
+    self.email = mail.first
   end
 ```
 
@@ -321,8 +342,8 @@ user.admin = true
 user.save!
 ```
 
-Upgrading
----------
+## Upgrading
+
 When upgrading Errbit, please run:
 
 ```bash
@@ -335,8 +356,17 @@ rake assets:precompile
 If we change the way that data is stored, this will run any migrations to bring your database up to date.
 
 
-User information in error reports
----------------------------------
+### Upgrade from errbit 0.2 to 0.3
+
+The file of MongoDB connection config/mongoid.yml change between 0.2 to
+0.3. So Check the new config/mongoid.yml.example file and update it in
+good way.
+
+This change is not need to be done if you use only ENV variable to
+define you access to MongoDB database.
+
+
+## User information in error reports
 
 Errbit can now display information about the user who experienced an error.
 This gives you the ability to ask the user for more information,
@@ -486,6 +516,10 @@ Solutions known to work are listed below:
     <td>https://github.com/flippa/errbit-php</td>
   </tr>
   <tr>
+    <th>OOP PHP (&gt;= 5.3)</th>
+    <td>https://github.com/emgiezet/errbitPHP</td>
+  </tr>
+  <tr>
     <th>Python</th>
     <td>https://github.com/mkorenkov/errbit.py , https://github.com/pulseenergy/airbrakepy</td>
   </tr>
@@ -555,4 +589,8 @@ Copyright
 ---------
 
 Copyright (c) 2010-2013 Errbit Team. See LICENSE for details.
+
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/errbit/errbit/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 

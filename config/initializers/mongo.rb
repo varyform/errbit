@@ -20,11 +20,22 @@ elsif ENV['HEROKU'] || ENV['USE_ENV']
   end
 
   Mongoid.configure do |config|
-    config.master = Mongo::Connection.new(
-      settings.host,
-      settings.port
-    ).db(database_name)
-    config.master.authenticate(settings.user, settings.password) if settings.user
+
+    hash = {
+      sessions: {
+        default: {
+          database: database_name,
+          hosts: [ "#{settings.host}:#{settings.port}" ]
+        }
+      },
+    }
+
+    if settings.user && settings.password
+      hash[:sessions][:default][:username] = settings.user
+      hash[:sessions][:default][:password] = settings.password
+    end
+
+    config.load_configuration(hash)
   end
 end
 

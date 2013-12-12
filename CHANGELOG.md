@@ -1,3 +1,39 @@
+## 0.3.0 - Not released Yet
+
+### Improvements
+
+- [#515][] Update to Mongoid 3.1 ([@arthurnn][], [@shingara][])
+- Drop the 1.8 support
+- [#289][] Add unwatch button on App view ([@numbata][], [@shingara][])
+- Add autofocus on email login page ([@shingara][])
+- Update Gem ([@arthurnn][], [@shingara][])
+- [#547][] Add capabilities to admin to regenerate the API key of his
+  app ([@shingara][])
+- Add environement variable configuration to change the ruby version to
+  use ([@shingara][])
+- [#588][] Change documentation to see Airbrake gem instead of
+  hoptoad_nofier ([@ugisozols][])
+
+### Bug Fixes
+
+- [#565][] Treat request URL as CDATA so query string params don't
+  result in invalid XML ([@mildavw][])
+- [#594][] Dont use ^ and $ on email_regexp([@arthurnn][])
+
+
+[@arthurnn]: https://github.com/arthurnn
+[@mildavw]: https://github.com/mildavw
+[@numbata]: https://github.com/numbata
+[@shingara]: https://github.com/shingara
+[@ugisozols]: https://github.com/ugisozols
+
+[#289]: https://github.com/errbit/errbit/issues/289
+[#515]: https://github.com/errbit/errbit/issues/515
+[#547]: https://github.com/errbit/errbit/issues/547
+[#565]: https://github.com/errbit/errbit/issues/565
+[#588]: https://github.com/errbit/errbit/issues/588
+[#594]: https://github.com/errbit/errbit/pull/594
+
 ## 0.2.1 - Not released Yet
 
 ### Improvements

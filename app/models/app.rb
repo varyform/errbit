@@ -16,7 +16,12 @@ class App
   field :email_at_notices, :type => Array, :default => Errbit::Config.email_at_notices
 
   # Some legacy apps may have string as key instead of BSON::ObjectID
-  identity :type => String
+  # identity :type => String
+  field :_id,
+    type: String,
+    pre_processed: true,
+    default: ->{ Moped::BSON::ObjectId.new.to_s }
+
 
   embeds_many :watchers
   embeds_many :deploys
@@ -61,7 +66,7 @@ class App
   end
 
   def self.find_by_api_key!(key)
-    where(:api_key => key).first || raise(Mongoid::Errors::DocumentNotFound.new(self,key))
+    find_by(:api_key => key)
   end
 
   def last_deploy_at
@@ -163,6 +168,10 @@ class App
 
   def email_at_notices
     Errbit::Config.per_app_email_at_notices ? super : Errbit::Config.email_at_notices
+  end
+
+  def regenerate_api_key!
+    set(:api_key, SecureRandom.hex)
   end
 
   protected

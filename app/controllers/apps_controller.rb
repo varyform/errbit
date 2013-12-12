@@ -12,7 +12,7 @@ class AppsController < ApplicationController
   }
 
   expose(:apps) {
-    app_scope.all.sort
+    app_scope.all.sort.to_a
   }
 
   expose(:app, :ancestor => :app_scope)
@@ -80,6 +80,11 @@ class AppsController < ApplicationController
     end
   end
 
+  def regenerate_api_key
+    app.regenerate_api_key!
+    redirect_to edit_app_path(app)
+  end
+
   protected
 
     def initialize_subclassed_issue_tracker
@@ -138,4 +143,3 @@ class AppsController < ApplicationController
       end
     end
 end
-
