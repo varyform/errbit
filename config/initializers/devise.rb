@@ -15,6 +15,8 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/mongoid'
 
+  config.secret_key = '7c0480a2c5faa50bf64795272e8140ac0c7a1cbbc44536d7c090fc23443b10c2807aab70e14c7e7cc3c0b3aa65ba49e03d267800a58d50dbac651e1511e5cc5c'
+
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
